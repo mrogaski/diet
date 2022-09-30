@@ -16,7 +16,6 @@ linters:
     - structcheck
     - sqlclosecheck
     - structcheck
-    - typecheck
     - varcheck
     - varnamelen
     - wastedassign
