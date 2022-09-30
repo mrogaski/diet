@@ -10,9 +10,4 @@ func NewTree[T constraints.Integer]() *Tree[T] {
 	return &Tree[T]{}
 }
 
-type Node[T constraints.Integer] struct {
-	first T
-	last  T
-	left  *Node[T]
-	right *Node[T]
-}
+type Node[T constraints.Integer] struct{}
