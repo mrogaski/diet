@@ -74,6 +74,94 @@ func TestTree_Contains(t *testing.T) {
 			elem:     4,
 			expected: false,
 		},
+		{
+			name: "left child hit",
+			tree: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 2},
+				Left: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: -8, Last: -6},
+				},
+			},
+			elem:     -7,
+			expected: true,
+		},
+		{
+			name: "left child miss",
+			tree: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 2},
+				Left: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: -8, Last: -6},
+				},
+			},
+			elem:     -4,
+			expected: false,
+		},
+		{
+			name: "left child successor miss",
+			tree: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 2},
+				Left: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: -8, Last: -6},
+				},
+			},
+			elem:     -5,
+			expected: false,
+		},
+		{
+			name: "left child parent predecessor miss",
+			tree: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 2},
+				Left: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: -8, Last: -6},
+				},
+			},
+			elem:     -3,
+			expected: false,
+		},
+		{
+			name: "right child hit",
+			tree: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 2},
+				Right: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: 6, Last: 8},
+				},
+			},
+			elem:     7,
+			expected: true,
+		},
+		{
+			name: "right child miss",
+			tree: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 2},
+				Right: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: 6, Last: 8},
+				},
+			},
+			elem:     4,
+			expected: false,
+		},
+		{
+			name: "right child predecessor miss",
+			tree: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 2},
+				Right: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: 6, Last: 8},
+				},
+			},
+			elem:     5,
+			expected: false,
+		},
+		{
+			name: "right child parent successor miss",
+			tree: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 2},
+				Right: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: 6, Last: 8},
+				},
+			},
+			elem:     3,
+			expected: false,
+		},
 	}
 
 	for _, tt := range tests {
