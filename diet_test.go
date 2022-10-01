@@ -22,34 +22,76 @@ func TestTree_Insert(t *testing.T) {
 	tests := []struct {
 		name     string
 		tree     *diet.Tree[int]
-		elem     int
+		input    []int
 		expected *diet.Tree[int]
 	}{
 		{
-			name:     "zero",
+			name:     "initial",
 			tree:     &diet.Tree[int]{},
-			elem:     0,
+			input:    []int{0},
 			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: 0, Last: 0}},
 		},
 		{
-			name:     "positive",
+			name:     "duplicate",
 			tree:     &diet.Tree[int]{},
-			elem:     5,
-			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: 5, Last: 5}},
+			input:    []int{0, 0},
+			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: 0, Last: 0}},
 		},
 		{
-			name:     "negative",
+			name:     "predecessor",
 			tree:     &diet.Tree[int]{},
-			elem:     -5,
-			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: -5, Last: -5}},
+			input:    []int{0, -1},
+			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: -1, Last: 0}},
+		},
+		{
+			name:     "successor",
+			tree:     &diet.Tree[int]{},
+			input:    []int{0, 1},
+			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: 0, Last: 1}},
+		},
+		{
+			name:  "left",
+			tree:  &diet.Tree[int]{},
+			input: []int{0, -5},
+			expected: &diet.Tree[int]{
+				Root: &diet.Node[int]{
+					First: 0,
+					Last:  0,
+					Left: &diet.Node[int]{
+						First: -5,
+						Last:  -5,
+					},
+				},
+			},
+		},
+		{
+			name:  "right",
+			tree:  &diet.Tree[int]{},
+			input: []int{0, 5},
+			expected: &diet.Tree[int]{
+				Root: &diet.Node[int]{
+					First: 0,
+					Last:  0,
+					Right: &diet.Node[int]{
+						First: 5,
+						Last:  5,
+					},
+				},
+			},
 		},
 	}
+
 	for _, tt := range tests {
 		tt := tt
+
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			err := tt.tree.Insert(tt.elem)
-			assert.NoError(t, err)
+
+			for _, elem := range tt.input {
+				err := tt.tree.Insert(elem)
+				assert.NoError(t, err)
+			}
+
 			assert.Equal(t, tt.expected, tt.tree)
 		})
 	}

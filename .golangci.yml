@@ -5,6 +5,7 @@ linters:
   disable:
     - deadcode
     - exhaustivestruct
+    - funlen
     - godox
     - golint
     - ifshort
