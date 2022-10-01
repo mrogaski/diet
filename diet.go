@@ -16,5 +16,6 @@ func NewTree[T Integer]() *Tree[T] {
 
 func (tree *Tree[T]) Insert(elem T) error {
 	tree.Root = &Node[T]{First: elem, Last: elem}
+
 	return nil
 }

@@ -17,6 +17,8 @@ func TestNewTree(t *testing.T) {
 }
 
 func TestTree_Insert(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name     string
 		tree     *diet.Tree[int]
@@ -43,7 +45,9 @@ func TestTree_Insert(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 			err := tt.tree.Insert(tt.elem)
 			assert.NoError(t, err)
 			assert.Equal(t, tt.expected, tt.tree)
