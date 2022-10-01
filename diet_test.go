@@ -15,3 +15,38 @@ func TestNewTree(t *testing.T) {
 
 	assert.IsType(t, &diet.Tree[int]{}, tree)
 }
+
+func TestTree_Insert(t *testing.T) {
+	tests := []struct {
+		name     string
+		tree     *diet.Tree[int]
+		elem     int
+		expected *diet.Tree[int]
+	}{
+		{
+			name:     "zero",
+			tree:     &diet.Tree[int]{},
+			elem:     0,
+			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: 0, Last: 0}},
+		},
+		{
+			name:     "positive",
+			tree:     &diet.Tree[int]{},
+			elem:     5,
+			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: 5, Last: 5}},
+		},
+		{
+			name:     "negative",
+			tree:     &diet.Tree[int]{},
+			elem:     -5,
+			expected: &diet.Tree[int]{Root: &diet.Node[int]{First: -5, Last: -5}},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := tt.tree.Insert(tt.elem)
+			assert.NoError(t, err)
+			assert.Equal(t, tt.expected, tt.tree)
+		})
+	}
+}
