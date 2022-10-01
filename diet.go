@@ -1,7 +1,5 @@
 package diet
 
-import "fmt"
-
 type Tree[T Integer] struct {
 	Interval *Interval[T]
 	Left     *Tree[T]
@@ -22,9 +20,10 @@ func (tree *Tree[T]) Contains(elem T) bool {
 	if tree.Interval == nil {
 		return false
 	}
+
 	return elem >= tree.Interval.First && elem <= tree.Interval.Last
 }
 
 func (tree *Tree[T]) Insert(elem T) error {
-	return fmt.Errorf("not implemented")
+	return nil
 }
