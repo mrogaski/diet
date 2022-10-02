@@ -43,8 +43,6 @@ func (tree *Tree[T]) Contains(elem T) bool {
 			}
 
 			t = t.Right
-		default:
-			return false
 		}
 	}
 }
@@ -79,8 +77,6 @@ func (tree *Tree[T]) Insert(elem T) {
 		case elem > t.Interval.Last:
 			t.Right = ternary(t.Right == nil, &Tree[T]{}, t.Right)
 			t = t.Right
-		default:
-			return
 		}
 	}
 }
