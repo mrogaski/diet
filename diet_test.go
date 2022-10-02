@@ -176,7 +176,6 @@ func TestTree_Contains(t *testing.T) {
 }
 
 func TestTree_Insert(t *testing.T) {
-	t.Skip("not implemented")
 	t.Parallel()
 
 	tests := []struct {
@@ -190,10 +189,7 @@ func TestTree_Insert(t *testing.T) {
 			tree:  &diet.Tree[int]{},
 			input: []int{0},
 			expected: &diet.Tree[int]{
-				Interval: &diet.Interval[int]{
-					First: 0,
-					Last:  0,
-				},
+				Interval: &diet.Interval[int]{First: 0, Last: 0},
 			},
 		},
 		{
@@ -201,10 +197,7 @@ func TestTree_Insert(t *testing.T) {
 			tree:  &diet.Tree[int]{},
 			input: []int{0, 0},
 			expected: &diet.Tree[int]{
-				Interval: &diet.Interval[int]{
-					First: 0,
-					Last:  0,
-				},
+				Interval: &diet.Interval[int]{First: 0, Last: 0},
 			},
 		},
 		{
@@ -212,10 +205,7 @@ func TestTree_Insert(t *testing.T) {
 			tree:  &diet.Tree[int]{},
 			input: []int{0, -1},
 			expected: &diet.Tree[int]{
-				Interval: &diet.Interval[int]{
-					First: -1,
-					Last:  0,
-				},
+				Interval: &diet.Interval[int]{First: -1, Last: 0},
 			},
 		},
 		{
@@ -223,10 +213,7 @@ func TestTree_Insert(t *testing.T) {
 			tree:  &diet.Tree[int]{},
 			input: []int{0, 1},
 			expected: &diet.Tree[int]{
-				Interval: &diet.Interval[int]{
-					First: 0,
-					Last:  1,
-				},
+				Interval: &diet.Interval[int]{First: 0, Last: 1},
 			},
 		},
 		{
@@ -234,15 +221,9 @@ func TestTree_Insert(t *testing.T) {
 			tree:  &diet.Tree[int]{},
 			input: []int{0, -5},
 			expected: &diet.Tree[int]{
-				Interval: &diet.Interval[int]{
-					First: 0,
-					Last:  0,
-				},
+				Interval: &diet.Interval[int]{First: 0, Last: 0},
 				Left: &diet.Tree[int]{
-					Interval: &diet.Interval[int]{
-						First: -5,
-						Last:  -5,
-					},
+					Interval: &diet.Interval[int]{First: -5, Last: -5},
 				},
 			},
 		},
@@ -251,15 +232,69 @@ func TestTree_Insert(t *testing.T) {
 			tree:  &diet.Tree[int]{},
 			input: []int{0, 5},
 			expected: &diet.Tree[int]{
-				Interval: &diet.Interval[int]{
-					First: 0,
-					Last:  0,
-				},
+				Interval: &diet.Interval[int]{First: 0, Last: 0},
 				Right: &diet.Tree[int]{
-					Interval: &diet.Interval[int]{
-						First: 5,
-						Last:  5,
-					},
+					Interval: &diet.Interval[int]{First: 5, Last: 5},
+				},
+			},
+		},
+		{
+			name:  "left with simple merge",
+			tree:  &diet.Tree[int]{},
+			input: []int{0, -2, -1},
+			expected: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 0},
+			},
+		},
+		{
+			name:  "left with LL merge",
+			tree:  &diet.Tree[int]{},
+			input: []int{0, -2, -4, -1},
+			expected: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 0},
+				Left: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: -4, Last: -4},
+				},
+			},
+		},
+		{
+			name:  "left with LR merge",
+			tree:  &diet.Tree[int]{},
+			input: []int{0, -4, -2, -1},
+			expected: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: -2, Last: 0},
+				Left: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: -4, Last: -4},
+				},
+			},
+		},
+		{
+			name:  "right with simple merge",
+			tree:  &diet.Tree[int]{},
+			input: []int{0, 2, 1},
+			expected: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: 0, Last: 2},
+			},
+		},
+		{
+			name:  "right with RR merge",
+			tree:  &diet.Tree[int]{},
+			input: []int{0, 2, 4, 1},
+			expected: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: 0, Last: 2},
+				Right: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: 4, Last: 4},
+				},
+			},
+		},
+		{
+			name:  "right with RL merge",
+			tree:  &diet.Tree[int]{},
+			input: []int{0, 4, 2, 1},
+			expected: &diet.Tree[int]{
+				Interval: &diet.Interval[int]{First: 0, Last: 2},
+				Right: &diet.Tree[int]{
+					Interval: &diet.Interval[int]{First: 4, Last: 4},
 				},
 			},
 		},
@@ -272,8 +307,7 @@ func TestTree_Insert(t *testing.T) {
 			t.Parallel()
 
 			for _, elem := range tt.input {
-				err := tt.tree.Insert(elem)
-				assert.NoError(t, err)
+				tt.tree.Insert(elem)
 			}
 
 			assert.Equal(t, tt.expected, tt.tree)
