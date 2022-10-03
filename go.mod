@@ -1,4 +1,4 @@
-module github.com/mrogaski/go-diet
+module github.com/mrogaski/diet
 
 go 1.19
 

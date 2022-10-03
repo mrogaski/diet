@@ -26,7 +26,7 @@ linters-settings:
     sections:
       - standard
       - default
-      - prefix(github.com/mrogaski/go-diet)
+      - prefix(github.com/mrogaski/diet)
   ireturn:
     allow:
       - T
