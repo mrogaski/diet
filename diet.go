@@ -24,22 +24,20 @@ func (tree *Tree[T]) Contains(elem T) bool {
 	t := tree // current subtree
 
 	for {
-		if t.Interval == nil {
-			return false
-		}
-
 		switch {
+		case t.Interval == nil:
+			return false
 		case t.Interval.has(elem):
 			return true
 		case elem < t.Interval.First:
 			if t.Left == nil {
-				t.Left = &Tree[T]{}
+				return false
 			}
 
 			t = t.Left
 		case elem > t.Interval.Last:
 			if t.Right == nil {
-				t.Right = &Tree[T]{}
+				return false
 			}
 
 			t = t.Right
@@ -53,7 +51,7 @@ func (tree *Tree[T]) Insert(elem T) {
 
 	for {
 		if t.Interval == nil {
-			t.Interval = &Interval[T]{First: elem, Last: elem}
+			t.Interval = NewInterval(elem)
 
 			return
 		}
@@ -94,12 +92,9 @@ func (tree *Tree[T]) joinLeft() {
 		return
 	}
 
-	parent := tree
-	child := tree.Left
-
+	parent, child := tree, tree.Left
 	for child.Right != nil {
-		parent = child
-		child = child.Right
+		parent, child = child, child.Right
 	}
 
 	if tree.Interval.adjacent(child.Interval) {
@@ -118,12 +113,9 @@ func (tree *Tree[T]) joinRight() {
 		return
 	}
 
-	parent := tree
-	child := tree.Right
-
+	parent, child := tree, tree.Right
 	for child.Left != nil {
-		parent = child
-		child = child.Left
+		parent, child = child, child.Left
 	}
 
 	if tree.Interval.adjacent(child.Interval) {

@@ -1,10 +1,15 @@
 package diet
 
-// Interval represents a subset consisting of a sequence of contiguous elements.
+// Interval represents a subset consisting of a sequence of contiguous elements which represent a discrete interval.
 // Single-element subsets are represented by an interval where First and Last are equal.
 type Interval[T Integer] struct {
 	First T
 	Last  T
+}
+
+// NewInterval returns a pointer to a new subset.
+func NewInterval[T Integer](elem T) *Interval[T] {
+	return &Interval[T]{First: elem, Last: elem}
 }
 
 func (i *Interval[T]) has(elem T) bool {
