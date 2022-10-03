@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/mrogaski/go-diet"
+	"github.com/mrogaski/diet"
 )
 
 func TestNewTree(t *testing.T) {
