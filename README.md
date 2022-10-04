@@ -1,5 +1,4 @@
-diet - Discrete interval encoding trees for Go
-==============================================
+# diet - Discrete interval encoding trees for Go
 
 [![build and test](https://github.com/mrogaski/diet/actions/workflows/ci.yml/badge.svg)](https://github.com/mrogaski/diet/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/mrogaski/diet/branch/main/graph/badge.svg?token=xbOzAjNDCr)](https://codecov.io/gh/mrogaski/diet)
